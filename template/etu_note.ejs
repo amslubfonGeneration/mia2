@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informations Étudiant</title>
+    <style>
+        a{
+            color:rgba(26, 82, 118, 0.5);
+            font-weight: 900;
+        }
+        body {
+            background-image: url('istockphoto-513480122-1024x1024.jpg');
+            font-family:'lobster', cursive;
+            font-size: 24px;
+            line-height: 1.5;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .info {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color:darkgrey;
+        }
+        .label {
+            font-weight: bold;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Informations Étudiant</h1>
+    <div class="info">
+        <span class="label">Matricule :<%= locals.etudiant_id%></span>
+    </div>
+    <div class="info">
+        <span class="label">Note de TP :<span class="note"><%= locals.etudiant_note%></span>/20</span>
+    </div>
+    <a href="/">Retour</a>
+</div>
+<script>
+    var note = document.getElementsByClassName("note")[0].innerHTML
+    var color = document.getElementsByClassName("info")
+    if(parseInt(note) < 10){
+        color[1].style.backgroundColor = 'red'
+    }else{
+        color[1].style.backgroundColor = 'yellow'
+    }
+    if(parseInt(note) > 12){
+        color[1].style.backgroundColor = 'lawngreen'
+    }
+</script>
+</body>
+</html>

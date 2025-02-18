@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="essai.css">
+    <script type="module" src="index.js"></script>
+    <script type="module" src="cookies.js"></script>
+    <link rel="stylesheet" href="cookies.css">
+    <style>
+        /*.cercle{
+            text-align: center;
+            display: none;
+            justify-content: center;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            font-weight: bold;
+            background-color: chartreuse;
+        }*/
+    </style>
+</head>
+<body>
+    <div id="container">
+    <header>
+        <img src="fast.jpg" alt="Logo Gauche" class="logo left">
+        <img src="logo-UAC.jpg" alt="Logo Droite" class="logo right">
+        <nav>
+            <div class="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                    <!-- Icône Font Awesome pour le menu -->
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+            </div>
+            <ul>
+                <li><a href="objectif.html">A Propos</a></li>
+                <li><a href="/connectAdministration">Administration</a></li>
+                <li><a href="/connectEtudiant">Etudiant</a></li>
+                <li><a href="/emailaction">Nous contacter</a></li>
+                <li><a href="/consulter">consulter</a></li>
+                <li id="mat" class="cercle"></li>
+            </ul>
+        </nav>
+        </header>
+    <main>
+        <div class="background-image">
+        <div class="text-container">
+            <h1>Bienvenue sur MiaTpNotes</h1>
+            Bienvenue sur MiaTpNotes, votre plateforme dédiée à la consultation et à la 
+            gestion des notes de travaux pratiques (TP) 
+            des etudiants en mathématique Informatique et Application
+
+        </div>
+        </div>
+        <div class="image-container">
+            <img src="istockphoto-1010696172-1024x1024.jpg" alt="Image 1">
+            <img src="istockphoto-1168040655-1024x1024.jpg" alt="Image 2">
+            <img src="istockphoto-936903524-1024x1024.jpg" alt="Image 3">
+            <img src="istockphoto-513480122-1024x1024.jpg" alt="Image 4">
+            <img src="low-angle-colleagues-working-together.jpg" alt="Image 5">
+            <img src="first.jpg" alt="Image 6">
+        </div>
+    </main>
+    <div id="session-consent-modall" class="modall">
+            <div class="modall-content">
+                <h2>Consentement de session</h2>
+                <p>Ce site utilise des sessions pour améliorer votre expérience.Elle vous permet de vous connecter a votre espace
+                    Si vous refuser certaines actions vous seront refuser.Acceptez-vous la création d'une session ?</p>
+                <button id="accept-session">Accepter</button>
+                <button id="decline-session">Refuser</button>
+            </div>
+        </div> 
+    <footer>
+        <p>&copy; 2025 MiaTpNotes. Tous droits réservés.</p>
+    </footer>
+</div>
+<script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navUl = document.querySelector('nav ul');
+
+            menuToggle.addEventListener('click', function () {
+                navUl.classList.toggle('show');
+            });
+        });
+    </script>
+</body>
+</html>
+

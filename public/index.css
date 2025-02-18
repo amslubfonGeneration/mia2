@@ -1,0 +1,92 @@
+@media (min-width: 768px) {
+.background-image {
+    background-image: url('istockphoto-513480122-1024x1024.jpg'); 
+    background-position: center;
+    position:relative;
+}
+
+.menu-toggle {
+    display: none;
+}
+body {
+    font-family: 'lobster', cursive;
+    font-size: 24px;
+    line-height: 1.5;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #333;
+    color: #fff;
+}
+
+.logo {
+    width: 60px; /* Changez la taille selon vos besoins */
+    border-radius: 30px;
+    
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 10px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+
+main {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    
+}
+
+.text-container {
+    border-radius: 10px;
+    background:beige;
+    color: #333;
+    text-align: justify;
+    width: 30%;
+    border: 2px solid #333 100px;
+    padding: 20px;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 7);
+    height: fit-content; /* Ajuste la hauteur selon le contenu */
+}
+
+.image-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end; /* Alignement à droite */
+    width: 100%;
+    
+}
+
+.image-container img {
+    width: calc(33.33% - 4px);
+    margin: 2px; /* Espace entre les images */
+}
+
+footer {
+    text-align: center;
+    padding: 10px 0;
+    background-color: #333;
+    color: #fff;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+}
+

@@ -1,0 +1,4 @@
+node_module/
+file.env
+secret-key1
+secret-key2

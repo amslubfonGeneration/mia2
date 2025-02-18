@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact</title>
+    <link rel="stylesheet" href="/message.css">
+    <main><script type="module" src="/message.js"></script></main>
+</head>
+<body>
+    <div class="registration-container">
+        <h2 class="form-title">Envoyer votre commentaire</h2>
+        <form method="post", action="/emailaction">
+            <% if(locals.message_email){ %>
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <%= locals.message_email %>
+            </div>
+        </div>        
+        <% } %>
+            <div class="form-group">
+                <label for="matricule">Matricule</label>
+                <input type="text" id="matricule" name="matricule" required>
+            </div>
+            <div class="form-group">
+                <label for="Contact">Contact</label>
+                <input type="text" id="Contact" name="Contact" required>
+            </div>
+            <div class="form-group">
+                <label for="Commentaire">Commentaire</label>
+                <input type="text" id="Commentaire" name="Commentaire" required>
+            </div>
+            <button type="submit" class="submit-btn">Envoyer</button>
+        </form>
+        <a href="/">Retour</a>
+    </div>
+</body>
+</html>

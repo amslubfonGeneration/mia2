@@ -27,7 +27,7 @@ app.register(fastifyFormbody)
 app.register(secureSession,[{
     sessionName: 'session_adm',
     cookieName: 'session_adm_cookies',
-    key: fs.readFileSync(join(rootDir, 'secret-key1')),
+    key: session_key1,
     cookie: {
         path:'/',
         httpOnly:true,
@@ -35,7 +35,7 @@ app.register(secureSession,[{
     }},{
     sessionName: 'session_etu',
     cookieName: 'session_etu_cookies',
-    key: fs.readFileSync(join(rootDir, 'secret-key2')),
+    key: session_key2,
     cookie: {
         path:'/',
         httpOnly:true,

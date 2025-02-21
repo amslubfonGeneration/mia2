@@ -25,11 +25,11 @@ export const AdmiconnectGet = async (req, res)=>{
 export const AdmiRéinitialisationGet = async (req, res)=>{
     if(req.session_adm.get('user_adm') === undefined || req.session_adm.get('user_adm') === null){
         return res.view('template/administration.ejs',{
-            message_adm:"Vous n'etes pas connecterConnecter vous ici a l'administration"
+            message_adm:"Vous n'etes pas connecter.Connecter vous ici a l'administration"
         })
     }else{
-        return res.view('template/administration.ejs',{
-            message_adm:"Réinitialisation le mot de pass de l'administration",
+        return res.view('template/reinitPass.ejs',{
+            message_adm:"Réinitialiser le mot de pass de l'administration",
             admin:'admin'
         })
     }
@@ -38,11 +38,11 @@ export const AdmiRéinitialisationGet = async (req, res)=>{
 export const EtuconnectGet = (req, res)=>{
     if(req.session_etu.get('user_etu') === undefined || req.session_etu.get('user_etu') === null){
         return res.view('template/etu_connection.ejs',{
-            message_etu:"Connecter vous ici pour continuer."
+            message_etu:"Connecter vous ici a votre espace pour continuer."
         })
     }else{
         return res.view('template/etu_connection.ejs',{
-            message_etu:"Vous etes connecter. Appuyer sur voir mes notes pour continuer.",
+            message_etu:"Vous etes actuellement connecter. Appuyer sur voir mes notes pour continuer.",
             connecté: "connecté"
         })
     }

@@ -1,7 +1,6 @@
 import nodemailer from 'nodemailer'
 import { email_pass, email_to, email_user } from './config.js';
 
-
 export const transporte = nodemailer.createTransport({
   service: 'gmail',
   host:'smtp.gmail.com',
@@ -12,7 +11,6 @@ export const transporte = nodemailer.createTransport({
     pass: email_pass,
   },
 })
-
 
 export const traitementMailPost = async (req, res) => {
     console.log(req.body)

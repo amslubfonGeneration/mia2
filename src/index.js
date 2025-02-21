@@ -10,7 +10,6 @@ import { fileURLToPath } from "node:url"
 import { AdmiconnectGet,administrerGet,AdmiRéinitialisationGet,consulterNote,deconnecterAdm,deconnecterEtu,EtuconnectGet,etuInscriptionGet} from './getaction.js'
 import { AdmiconnectPost, administrerPost, AdmiRéinitialisationPost, EtuconnectPost, etuInscriptionPost} from './postaction.js'
 import { traitementMailPost } from "./email.js"
-import { session_key1, session_key2 } from "./config.js"
 const host = ("RENDER" in process.env) ? `0.0.0.0` : `localhost`;
 
 const rootDir = dirname(dirname(fileURLToPath(import.meta.url)))
@@ -31,15 +30,17 @@ app.register(secureSession,[{
     cookie: {
         path:'/',
         httpOnly:true,
-        sameSite:true
+        sameSite:true,
+        secure:true
     }},{
     sessionName: 'session_etu',
     cookieName: 'session_etu_cookies',
-    key: session_key2,
+    key: session_key2',
     cookie: {
         path:'/',
         httpOnly:true,
-        sameSite: true
+        sameSite: true,
+        secure:true
     }}
 ])
 app.get('/Réinitialisation', AdmiRéinitialisationGet)
@@ -68,6 +69,9 @@ app.get('/api/users',async(req, res)=>{
     }
 })
 app.get('/consulter', consulterNote)
+app.get('/health', async(req, res)=>{
+    res.status(200).send('OK');
+})
 //Methode post
 app.post('/Réinitialisation', AdmiRéinitialisationPost)
 app.post('/connectEtudiant', EtuconnectPost)

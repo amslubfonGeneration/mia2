@@ -16,6 +16,7 @@ export const AdmiconnectPost = async (req, res)=>{
     const { data: admis, error: admisError } = await supabase
             .from('administration')
             .select('*')
+            console.log(admis)
     if(admisError){
         throw new Error("Une erreur s'est produite Réesayer")
     }
@@ -42,7 +43,7 @@ export const AdmiRéinitialisationPost = async (req, res)=>{
             httpOnly:true,
             sameSite:'Strict'
         })
-        return res.redirect('connectAdministration')
+        return res.redirect('Réinitialisation')
     }
     const { error: deleteError } = await supabase
         .from('administration')
@@ -150,7 +151,7 @@ export const EtuconnectPost = async (req, res)=>{
             res.redirect('/')
         }else{
             return res.view('template/etu_connection',{
-                message_etu: "Echec de Connexion"
+                message_etu: "Echec de Connexion.Vérifier vos identifiants et réesssayer"
             })
         }
     }else{

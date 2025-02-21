@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Réinitialisation Mots de pass</title>
+    <script type="module" src="/message.js"></script>
+    <link rel="stylesheet" href="/message.css">
+    <script type="module" src="/cookies.js"></script>
+    <link rel="stylesheet" href="/cookies.css">
+</head>
+<body>
+    <div id="session-consent-modall" class="modall">
+            <div class="modall-content">
+                <h2>Consentement de session</h2>
+                <p>Ce site utilise des sessions pour améliorer votre expérience.Elle vous permet de vous connecter a votre espace.
+                    Si vous refuser certaines actions vous seront refuser.Acceptez-vous la création d'une session ?</p>
+                <button id="accept-session">Accepter</button>
+                <button id="decline-session">Refuser</button>
+            </div>
+        </div>
+    <div class="registration-container">
+        <% if(locals.message_adm){ %>
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <%= locals.message_adm %>
+            </div>
+        </div>        
+        <% } %>
+        <h2 class="form-title">Réinitialiser Mots de pass</h2>
+        <form method="POST">
+            <div class="form-group">
+                <label for="Administration_id">Administration_id</label>
+                <input type="text" id="id" name="id" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Mot de passe</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit" class="submit-btn">Soumettre</button>
+        </form>
+        <a href="/deconnectAdm">Se déconnecter</a>
+        <% if(locals.admin){ %>
+            <a href="/administrer">administrer</a>
+        <% } %>
+        <a href="/">Retour</a>
+    </div>
+</body>
+</html>

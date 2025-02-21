@@ -51,7 +51,7 @@ export const EtuconnectGet = (req, res)=>{
 export const etuInscriptionGet = (req, res)=>{
     if(req.session_etu.get('user_etu') !== undefined && req.session_etu.get('user_etu') !== null){
         return res.view('template/etu_inscription.ejs',{
-            message_etu:`Matricule:${id},
+            message_etu:`Matricule:${req.session_etu.get('user_etu')?.id},
             a déja un compte.`
         })
     }else{

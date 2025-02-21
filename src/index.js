@@ -10,6 +10,7 @@ import { fileURLToPath } from "node:url"
 import { AdmiconnectGet,administrerGet,AdmiRéinitialisationGet,consulterNote,deconnecterAdm,deconnecterEtu,EtuconnectGet,etuInscriptionGet} from './getaction.js'
 import { AdmiconnectPost, administrerPost, AdmiRéinitialisationPost, EtuconnectPost, etuInscriptionPost} from './postaction.js'
 import { traitementMailPost } from "./email.js"
+import { session_key1, session_key2 } from "./config.js"
 const host = ("RENDER" in process.env) ? `0.0.0.0` : `localhost`;
 
 const rootDir = dirname(dirname(fileURLToPath(import.meta.url)))

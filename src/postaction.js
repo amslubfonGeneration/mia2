@@ -28,6 +28,14 @@ export const AdmiconnectPost = async (req, res)=>{
             req.session_adm.set('user_adm', {
                 id: admis[0].id,
             })
+            if(req.cookies.boiteDeDialogue){
+                res.clearCookie('boiteDeDialogue',{
+                    Path:'/',
+                    secure:true,
+                    httpOnly:true,
+                    sameSite:'Strict'
+                })
+            }
             return res.redirect('/')
         }else{
             return res.view('template/administration.ejs',{
@@ -84,8 +92,20 @@ export const AdmiRéinitialisationPost = async (req, res)=>{
                 throw Error("Une erreur s'est produite Réesayer")
             }  
             req.session_adm.delete()
+            res.setCookie('reinit','Réinitialisation réussit',{
+                path:'/',
+                httpOnly: true,
+            })
             if(req.cookies.sessionConsent){
                 res.clearCookie('sessionConsent',{
+                    Path:'/',
+                    secure:true,
+                    httpOnly:true,
+                    sameSite:'Strict'
+                })
+            }
+            if(req.cookies.boiteDeDialogue){
+                res.clearCookie('boiteDeDialogue',{
                     Path:'/',
                     secure:true,
                     httpOnly:true,
@@ -133,17 +153,28 @@ export const etuInscriptionPost = async (req, res)=>{
             if(insertError){
                 throw new Error("Une erreur s'est produite Réesayer")
             }
-            return res.redirect('/connectEtudiant')
+            res.setCookie('inscription','inscription réussit',{
+                path:'/',
+                httpOnly: true,
+            })
+            if(req.cookies.boiteDeDialogue){
+                res.clearCookie('boiteDeDialogue',{
+                    Path:'/',
+                    secure:true,
+                    httpOnly:true,
+                    sameSite:'Strict'
+                })
+            }
+            return res.redirect('/')
         }else{
             return res.view('template/etu_inscription.ejs',{
-                message_etu:`Matricule:${id},
-                a déja un compte.Vous pouvez vous connectez pour voir vos notes`
+                message_etu:`Matricule:${id} a déja un compte.`
             })
         }
     }else{
         return res.view('template/etu_inscription',{
             message_etu: `Matricule:${req.session_etu.get('user_etu')?.id},
-            déconnecté vous d'abord pour cette action`
+            déconnecté vous d'abord pour effectuer cette action`
         })
     }
 }
@@ -174,6 +205,14 @@ export const EtuconnectPost = async (req, res)=>{
             req.session_etu.set('user_etu', {
                     id: admis.id
             })
+            if(req.cookies.boiteDeDialogue){
+                res.clearCookie('boiteDeDialogue',{
+                    Path:'/',
+                    secure:true,
+                    httpOnly:true,
+                    sameSite:'Strict'
+                })
+            }
             res.redirect('/')
         }else{
             return res.view('template/etu_connection',{

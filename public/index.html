@@ -10,16 +10,41 @@
     <script type="module" src="cookies.js"></script>
     <link rel="stylesheet" href="cookies.css">
     <style>
-        /*.cercle{
+        
+        .modal {
+                    display: none; 
+                    position: fixed;
+                    z-index: 1;
+                    left: 0;
+                    top: 0;
+                    width: 100%;
+                    height: 100%;
+                    background-color: rgba(0, 0, 0, 0.5);
+                    color: white;
+        }
+        .modal-content {
+            background-color:chartreuse;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 100%;
+            max-width: 300px;
+            height: 70px;
             text-align: center;
-            display: none;
-            justify-content: center;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
+            border-radius: 8px;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
             font-weight: bold;
-            background-color: chartreuse;
-        }*/
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -64,6 +89,12 @@
             <img src="first.jpg" alt="Image 6">
         </div>
     </main>
+    <div id="myModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <p class="message"></p>
+            </div>
+    </div>
     <div id="session-consent-modall" class="modall">
             <div class="modall-content">
                 <h2>Consentement de session</h2>
@@ -72,7 +103,7 @@
                 <button id="accept-session">Accepter</button>
                 <button id="decline-session">Refuser</button>
             </div>
-        </div> 
+    </div> 
     <footer>
         <p>&copy; 2025 MiaTpNotes. Tous droits réservés.</p>
     </footer>

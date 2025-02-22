@@ -59,11 +59,15 @@ app.get('/api/users',async(req, res)=>{
     if(req.session_etu.get('user_etu')?.id || req.session_adm.get('user_adm')?.id){
         res.send({
             isUser: true,
-            isUserId:req.session_etu.get('user_etu')?.id || 'Administration'
+            isUserId:req.session_etu.get('user_etu')?.id || 'Administration',
+            inscription:req.cookies.inscription,
+            reinit: req.cookies.reinit
         })
     }else{
         res.send({
-            isUser: false
+            isUser: false,
+            inscription:req.cookies.inscription,
+            reinit: req.cookies.reinit
         })
     }
 })

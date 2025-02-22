@@ -31,8 +31,7 @@ app.register(secureSession,[{
     cookie: {
         path:'/',
         httpOnly:true,
-        sameSite:true,
-        secure:true
+        sameSite:true
     }},{
     sessionName: 'session_etu',
     cookieName: 'session_etu_cookies',
@@ -40,8 +39,7 @@ app.register(secureSession,[{
     cookie: {
         path:'/',
         httpOnly:true,
-        sameSite: true,
-        secure:true
+        sameSite: true
     }}
 ])
 app.get('/Réinitialisation', AdmiRéinitialisationGet)
@@ -90,7 +88,10 @@ app.setErrorHandler((error,req,res) => {
     }
     if(error.message === "Une erreur s'est produite Réesayer"){
         return res.redirect("error.html")
-    }    
+    }   
+    if(error.message === "pchstr must be a non-empty string"){
+        return res.redirect("error.html")
+    } 
     console.error(error)
     res.statusCode = 500
     return {

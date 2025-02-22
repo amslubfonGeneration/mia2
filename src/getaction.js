@@ -38,7 +38,7 @@ export const AdmiRéinitialisationGet = async (req, res)=>{
 export const EtuconnectGet = (req, res)=>{
     if(req.session_etu.get('user_etu') === undefined || req.session_etu.get('user_etu') === null){
         return res.view('template/etu_connection.ejs',{
-            message_etu:"Connecter vous ici a votre espace pour continuer."
+            message_etu:"Vous n'etes pas actuellement connecter.Connecter vous ici pour continuer."
         })
     }else{
         return res.view('template/etu_connection.ejs',{
@@ -52,7 +52,7 @@ export const etuInscriptionGet = (req, res)=>{
     if(req.session_etu.get('user_etu') !== undefined && req.session_etu.get('user_etu') !== null){
         return res.view('template/etu_inscription.ejs',{
             message_etu:`Matricule:${req.session_etu.get('user_etu')?.id},
-            a déja un compte.`
+            a déja un compte.Déconnectez vous pour continuer.`
         })
     }else{
         return res.view('template/etu_inscription.ejs',{

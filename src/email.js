@@ -1,6 +1,7 @@
 import nodemailer from 'nodemailer'
 import { email_pass, email_to, email_user } from './config.js';
 
+
 export const transporte = nodemailer.createTransport({
   service: 'gmail',
   host:'smtp.gmail.com',
@@ -12,8 +13,8 @@ export const transporte = nodemailer.createTransport({
   },
 })
 
+
 export const traitementMailPost = async (req, res) => {
-    console.log(req.body)
     const { matricule,Contact,Commentaire } = req.body
     try {
     // Envoyer un e-mail avec Nodemailer
@@ -31,7 +32,9 @@ export const traitementMailPost = async (req, res) => {
         message_email: `votre message a été envoyé avec succes.Merci.`
     })
     }catch (error) {
-        console.error(error);
+        if(error.message === 'Connection timeout'){
+            throw new Error("Une erreur s'est produite Réesayer")
+        }
         return res.view('template/email.ejs',{
             message_email: "Une erreur s'est produite lors de l'envoie de votre message.Vérifier votre connexion"
         })

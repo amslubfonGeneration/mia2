@@ -5,6 +5,8 @@ import fastifyView from "@fastify/view"
 import fastify from "fastify"
 import ejs from 'ejs'
 import fs from 'node:fs'
+import cors from '@fastify/cors'
+import helmet from '@fastify/helmet'
 import { dirname, join } from "node:path"
 import { fileURLToPath } from "node:url"
 import { AdmiconnectGet,administrerGet,AdmiRéinitialisationGet,consulterNote,deconnecterAdm,deconnecterEtu,EtuconnectGet,etuInscriptionGet} from './getaction.js'
@@ -30,18 +32,26 @@ app.register(secureSession,[{
     key: session_key1,
     cookie: {
         path:'/',
+        secure: true,
         httpOnly:true,
-        sameSite:true
+        sameSite:true,
     }},{
     sessionName: 'session_etu',
     cookieName: 'session_etu_cookies',
     key: session_key2,
     cookie: {
         path:'/',
+        secure: true,
         httpOnly:true,
         sameSite: true
     }}
 ])
+app.register(helmet)
+app.register(cors,{
+    origin:['https://fastmiatpnotes-dqc3.onrender.com'],
+    methods: ['GET','POST']
+})
+
 app.get('/Réinitialisation', AdmiRéinitialisationGet)
 app.get('/connectAdministration', AdmiconnectGet)
 app.get('/connectEtudiant', EtuconnectGet)

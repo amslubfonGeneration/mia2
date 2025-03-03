@@ -95,6 +95,8 @@ export const AdmiRéinitialisationPost = async (req, res)=>{
             res.setCookie('reinit','Réinitialisation réussit',{
                 path:'/',
                 httpOnly: true,
+                secure: true,
+                sameSite: 'Strict'
             })
             if(req.cookies.sessionConsent){
                 res.clearCookie('sessionConsent',{
@@ -154,8 +156,10 @@ export const etuInscriptionPost = async (req, res)=>{
                 throw new Error("Une erreur s'est produite Réesayer")
             }
             res.setCookie('inscription','inscription réussit',{
-                path:'/',
-                httpOnly: true,
+                Path:'/',
+                secure:true,
+                httpOnly:true,
+                sameSite:'Strict'
             })
             if(req.cookies.boiteDeDialogue){
                 res.clearCookie('boiteDeDialogue',{

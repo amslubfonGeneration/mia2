@@ -13,7 +13,6 @@ export const transporte = nodemailer.createTransport({
   },
 })
 
-
 export const traitementMailPost = async (req, res) => {
     const { matricule,Contact,Commentaire } = req.body
     try {

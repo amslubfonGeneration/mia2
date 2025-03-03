@@ -6,7 +6,6 @@ import fastify from "fastify"
 import ejs from 'ejs'
 import fs from 'node:fs'
 import cors from '@fastify/cors'
-import helmet from '@fastify/helmet'
 import { dirname, join } from "node:path"
 import { fileURLToPath } from "node:url"
 import { AdmiconnectGet,administrerGet,AdmiRéinitialisationGet,consulterNote,deconnecterAdm,deconnecterEtu,EtuconnectGet,etuInscriptionGet} from './getaction.js'
@@ -46,7 +45,7 @@ app.register(secureSession,[{
         sameSite: true
     }}
 ])
-app.register(helmet)
+
 app.register(cors,{
     origin:['https://fastmiatpnotes-dqc3.onrender.com'],
     methods: ['GET','POST']

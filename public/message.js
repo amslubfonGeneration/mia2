@@ -13,7 +13,9 @@ window.onload = function() {
             span.onclick = function() {
                 modal.style.display = "none";
             }
-
+            span.onclick = function() {
+                modal.style.display = "none";
+            }
             // Ferme la boîte d'alerte lorsque l'utilisateur clique en dehors de la boîte
             window.onclick = function(event) {
                 if (event.target == modal) {

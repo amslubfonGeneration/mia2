@@ -17,3 +17,15 @@ if(document.cookie.split('; ').find(row => row.startsWith('sessionConsent=')) ==
 if(document.cookie.split('; ').find(row => row.startsWith('sessionDeConsent=')) !== undefined){
     sessionConsentModal.style.display = 'none'
 }
+
+        var note = document.getElementsByClassName("note")[0].innerHTML
+        var color = document.getElementsByClassName("info")
+        if(parseFloat(note) < 10){
+            color[1].style.backgroundColor = 'red'
+        }else{
+            color[1].style.backgroundColor = 'yellow'
+        }
+        if(parseFloat(note) > 12){
+            color[1].style.backgroundColor = 'lawngreen'
+        }
+    

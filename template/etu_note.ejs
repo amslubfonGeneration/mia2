@@ -44,28 +44,32 @@
     </style>
 </head>
 <body>
-
-<div class="container">
-    <h1>Informations Étudiant</h1>
-    <div class="info">
-        <span class="label">Matricule :<%= locals.etudiant_id%></span>
+    <div class="container">
+        <h1>Informations Étudiant</h1>
+        <div class="info">
+            <span class="label">Matricule :<%= locals.etudiant_id%></span><br>
+            <span class="label">Email :<%= locals.etudiant_email%></span>
+        </div>
+        <div class="info">
+            <span class="label">Note de TP :
+                <span class="note">
+                    <%= `${locals.etudiant_note ||'Note indisponible pour le moment.Note'}/20`%>
+                </span>
+            </span>
+        </div>
+        <a href="/">Retour</a>
     </div>
-    <div class="info">
-        <span class="label">Note de TP :<span class="note"><%= locals.etudiant_note%></span>/20</span>
-    </div>
-    <a href="/">Retour</a>
-</div>
-<script>
-    var note = document.getElementsByClassName("note")[0].innerHTML
-    var color = document.getElementsByClassName("info")
-    if(parseInt(note) < 10){
-        color[1].style.backgroundColor = 'red'
-    }else{
-        color[1].style.backgroundColor = 'yellow'
-    }
-    if(parseInt(note) > 12){
-        color[1].style.backgroundColor = 'lawngreen'
-    }
-</script>
+    <script>
+        var note = document.getElementsByClassName("note")[0].innerHTML
+        var color = document.getElementsByClassName("info")
+        if(parseInt(note) < 10){
+            color[1].style.backgroundColor = 'red'
+        }else{
+            color[1].style.backgroundColor = 'yellow'
+        }
+        if(parseInt(note) > 12){
+            color[1].style.backgroundColor = 'lawngreen'
+        }
+    </script>
 </body>
 </html>

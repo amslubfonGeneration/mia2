@@ -4,13 +4,12 @@ import fastifyStatic from "@fastify/static"
 import fastifyView from "@fastify/view"
 import fastify from "fastify"
 import ejs from 'ejs'
-import fs from 'node:fs'
-import cors from '@fastify/cors'
 import { dirname, join } from "node:path"
 import { fileURLToPath } from "node:url"
-import { AdmiconnectGet,administrerGet,AdmiRéinitialisationGet,consulterNote,deconnecterAdm,deconnecterEtu,EtuconnectGet,etuInscriptionGet} from './getaction.js'
-import { AdmiconnectPost, administrerPost, AdmiRéinitialisationPost, EtuconnectPost, etuInscriptionPost} from './postaction.js'
+import { AdmiconnectGet,administrationConsult,administrerGet,AdmiRéinitialisationGet,consulterNote,deconnecterAdm,deconnecterEtu,EtuconnectGet,etuInscriptionGet} from './getaction.js'
+import { AdmiconnectPost, administrerPost, AdmiRéinitialisationPost} from './postaction_1.js'
 import { traitementMailPost } from "./email.js"
+import { EtuconnectPost, etuInscriptionPost } from "./postaction_2.js"
 import { session_key1, session_key2 } from "./config.js"
 const host = ("RENDER" in process.env) ? `0.0.0.0` : `localhost`;
 
@@ -46,11 +45,6 @@ app.register(secureSession,[{
     }}
 ])
 
-app.register(cors,{
-    origin:['https://fastmiatpnotes-dqc3.onrender.com'],
-    methods: ['GET','POST']
-})
-
 app.get('/Réinitialisation', AdmiRéinitialisationGet)
 app.get('/connectAdministration', AdmiconnectGet)
 app.get('/connectEtudiant', EtuconnectGet)
@@ -61,6 +55,7 @@ app.get('/deconnectEtu', deconnecterEtu)
 app.get('/emailaction',async (req, res)=>{
     return res.view('template/email.ejs')
 })
+
 app.get('/',async (req, res)=>{
     return res.redirect('index.html')
 })
@@ -80,6 +75,17 @@ app.get('/api/users',async(req, res)=>{
         })
     }
 })
+app.get('/api',async (req, res)=>{
+    if(req.cookies.consultation){
+                res.clearCookie('consultation',{
+                    Path:'/',
+                    secure:true,
+                    httpOnly:true,
+                    sameSite:'Strict'
+                })
+            }
+    return res.redirect('/')
+})
 app.get('/consulter', consulterNote)
 app.get('/health', async(req, res)=>{
     res.status(200).send('OK');
@@ -91,6 +97,7 @@ app.post('/connectAdministration', AdmiconnectPost)
 app.post('/etuInscription', etuInscriptionPost)
 app.post('/administrer', administrerPost)
 app.post('/emailaction', traitementMailPost)
+app.post('/administrationConsultation', administrationConsult)
 //Getion des erreurs de l'Api
 
 app.setErrorHandler((error,req,res) => {

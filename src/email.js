@@ -20,7 +20,7 @@ export const traitementMailPost = async (req, res) => {
     await transporte.sendMail({
         from: `"Formulaire de contact" <${email_user}>`,
         to: email_to,
-        subject: 'Contact support mia2tpNotes', // Sujet de l'e-mail
+        subject: 'Contact support MiaTpNotes', // Sujet de l'e-mail
             text: `Matricule: ${matricule}\nContact/Email: ${Contact}\nMessage: ${Commentaire}`, // Contenu en texte brut
             html: `<p><strong>Matricule:</strong> ${matricule}</p>
                     <p><strong>Contact/Email:</strong> ${Contact}</p>

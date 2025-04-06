@@ -3,6 +3,47 @@ import { supabase } from './database.js';
 import { transporte } from './email.js';
 import { email_user } from './config.js';
 
+
+export const Information =  async(req, res)=>{
+    const info = [
+        {Licence_: 'Licence1',Semestre_: 'Semestre2'},
+        {Licence_: 'Licence2',Semestre_: 'Semestre3'},
+        {Licence_: 'Licence2',Semestre_: 'Semestre4'}
+    ]
+    if(info.some(item => item.Licence_=== req.body.Licence_ && item.Semestre_ === req.body.Semestre_)){
+        if((req.session_adm.get('user_adm') === undefined || req.session_adm.get('user_adm') === null)&&
+            (req.session_etu.get('user_etu') === undefined || req.session_etu.get('user_etu') === null)){
+            res.setCookie('consultation','consultation',{
+                path:'/'
+            })
+            res.redirect('/')
+        }else{
+            if(!(req.session_etu.get('user_etu') === undefined || req.session_etu.get('user_etu') === null)){
+                req.session_etu.set('user_etu_info', req.body)
+                res.redirect('/consulter')
+            }
+            if(!(req.session_adm.get('user_adm') === undefined || req.session_adm.get('user_adm') === null)){
+                req.session_adm.set('user_adm_info', req.body)
+                if(JSON.stringify(req.body) === JSON.stringify(info[0]) || 
+                    JSON.stringify(req.body) === JSON.stringify(info[1])){
+                    res.redirect('/administrerS2_S3')
+                }
+                if(JSON.stringify(req.body) === JSON.stringify(info[2])){
+                    res.redirect('/administrerS4')
+                }
+            }
+        }
+    }else{
+        res.setCookie('Information',{
+                    Path:'/',
+                    secure:true,
+                    httpOnly:true,
+                    sameSite:'Strict'
+        })
+        res.redirect('detail.html')
+    }
+}
+
 export const etuInscriptionPost = async (req, res)=>{
     if(req.session_etu.get('user_etu') === undefined || req.session_etu.get('user_etu') === null){
         const password = await hash(req.body.password)
@@ -16,7 +57,7 @@ export const etuInscriptionPost = async (req, res)=>{
                 }
         if(admis.password === null){
                try {
-            // Envoyer un e-mail a l'administration
+                // Envoyer un e-mail a l'administration
                 await transporte.sendMail({
                     from: `"Inscription MiaTpNote" <${email_user}>`,
                     to: req.body.email,

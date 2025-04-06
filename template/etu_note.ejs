@@ -41,22 +41,38 @@
             font-weight: bold;
             color: #555;
         }
+        p{
+            text-align: center;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
+    
+        <div class="container">
+            <% if(locals.data){ %>
+        <% for(const post of data) { %>
         <h1>Informations Étudiant</h1>
         <div class="info">
-            <span class="label">Matricule :<%= locals.etudiant_id%></span><br>
-            <span class="label">Email :<%= locals.etudiant_email%></span>
+            <span class="label">Matricule :<%= post.id_etudiant %></span><br>
+            <span class="label">Semestre :<%= post.Semestres%></span>
         </div>
         <div class="info">
-            <span class="label">Note de TP :
+            <span class="label">Note de <%= post.matieres  %>:
                 <span class="note">
-                    <%= `${locals.etudiant_note ||'Note indisponible pour le moment.Note'}/20`%>
+                    <%= `${post.Notes ||'Note indisponible pour le moment.Note'}/20`%>
                 </span>
             </span>
-        </div>
+            <% } %>
+        <% } %>
+        <% if(locals.data.length === 0){ %>
+        <p>
+            Notes de TP indisponibles pour le moment.
+        </p>
+    <% } %>
+    </div>
+    
+    
+
         <a href="/">Retour</a>
     </div>
     <script>

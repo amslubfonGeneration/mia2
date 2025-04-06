@@ -87,13 +87,13 @@
         <% for(const post of data) { %>
             <div class="container">
             <div class="info inf">
-                <span class="label">Matricule :<%= post.id%></span><br>
-                <span class="label">Email :<%= post.email%></span>
+                <span class="label">Matricule :<%= post.id_etudiant%></span><br>
+                <span class="label">Semestre :<%= post.Semestres%></span>
             </div>
             <div class="info" >
-                <span class="label">Note de TP :
+                <span class="label">Note de <%= post.matieres %>:
                     <span class="note">
-                        <%= `${post.Note ||'Note indisponible pour le moment.Note'}/20`%>
+                        <%= `${post.Notes ||'Note indisponible pour le moment.Note'}/20`%>
                     </span>
                 </span>
             </div>

@@ -17,15 +17,15 @@
             </div>
         </div>        
         <% } %>
-        <h2 class="form-title">Administrer</h2>
+        <h2 class="form-title">Administrer <br> <%= locals.licence %>(<%= locals.semestre %>):</h2>
         <form method="POST">
             <div class="form-group">
                 <label for="matricule">Matricule</label>
                 <input type="text" id="id" name="id" required>
             </div>
             <div class="form-group">
-                <label for="Note">Note</label>
-                <input type="number" id="Note" name="Note" required>
+                <label for="physique">Note_TP_Physique</label>
+                <input type="number" id="physique" name="physique" required>
             </div>
             <div class="form-group">
                 <label for="password">Mot de pass</label>
@@ -33,6 +33,7 @@
             </div>
             <button type="submit" class="submit-btn">Envoyer</button>
         </form>
+        <a href="/api">Réadministrer</a>
         <a href="/">Retour</a>
     </div>
 </body>

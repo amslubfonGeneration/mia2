@@ -4,13 +4,14 @@ import fastifyStatic from "@fastify/static"
 import fastifyView from "@fastify/view"
 import fastify from "fastify"
 import ejs from 'ejs'
+import fs from 'node:fs'
 import { dirname, join } from "node:path"
 import { fileURLToPath } from "node:url"
-import { AdmiconnectGet,administrationConsult,administrerGet,AdmiRéinitialisationGet,consulterNote,deconnecterAdm,deconnecterEtu,EtuconnectGet,etuInscriptionGet} from './getaction.js'
-import { AdmiconnectPost, administrerPost, AdmiRéinitialisationPost} from './postaction_1.js'
+import { AdmiconnectGet,administrationConsult,administrerGet,administrerS2_S3Get,administrerS4Get,AdmiRéinitialisationGet,consulterNote,deconnecterAdm,deconnecterEtu,EtuconnectGet,etuInscriptionGet} from './getaction.js'
+import { AdmiconnectPost, administrerS2_S3_Post, administrerS4Post, AdmiRéinitialisationPost} from './postaction_1.js'
 import { traitementMailPost } from "./email.js"
-import { EtuconnectPost, etuInscriptionPost } from "./postaction_2.js"
 import { session_key1, session_key2 } from "./config.js"
+import { EtuconnectPost, etuInscriptionPost, Information } from "./postaction_2.js"
 const host = ("RENDER" in process.env) ? `0.0.0.0` : `localhost`;
 
 const rootDir = dirname(dirname(fileURLToPath(import.meta.url)))
@@ -50,6 +51,8 @@ app.get('/connectAdministration', AdmiconnectGet)
 app.get('/connectEtudiant', EtuconnectGet)
 app.get('/etuInscription', etuInscriptionGet)
 app.get('/administrer',administrerGet)
+app.get('/administrerS2_S3', administrerS2_S3Get)
+app.get('/administrerS4', administrerS4Get)
 app.get('/deconnectAdm', deconnecterAdm)
 app.get('/deconnectEtu', deconnecterEtu)
 app.get('/emailaction',async (req, res)=>{
@@ -83,19 +86,49 @@ app.get('/api',async (req, res)=>{
                     httpOnly:true,
                     sameSite:'Strict'
                 })
-            }
-    return res.redirect('/')
+                return res.redirect('/')
+    }
+    if(req.cookies.Information){
+                res.clearCookie('Information',{
+                    Path:'/',
+                    secure:true,
+                    httpOnly:true,
+                    sameSite:'Strict'
+                })
+                return res.redirect('detail.html')
+    }
+    if(req.session_adm.get('user_adm_info') !== undefined || req.session_adm.get('user_adm_info') !== null){
+        res.clearCookie('user_adm_info',{
+            path: '/',
+            secure: true,
+            httpOnly:true
+        })
+        //console.log(req.session_adm)
+        res.redirect('detail.html')
+    }
+
+    if(req.session_etu.get('user_etu_info') !== undefined || req.session_etu.get('user_etu_info') !== null){
+        res.clearCookie('user_etu_info',{
+            path: '/',
+            secure: true,
+            httpOnly:true
+        })
+        //console.log(req.session_adm)
+        res.redirect('detail.html')
+    }
 })
 app.get('/consulter', consulterNote)
 app.get('/health', async(req, res)=>{
     res.status(200).send('OK');
 })
 //Methode post
+app.post('/information',Information)
 app.post('/Réinitialisation', AdmiRéinitialisationPost)
 app.post('/connectEtudiant', EtuconnectPost)
 app.post('/connectAdministration', AdmiconnectPost)
 app.post('/etuInscription', etuInscriptionPost)
-app.post('/administrer', administrerPost)
+app.post('/administrerS2_S3', administrerS2_S3_Post)
+app.post('/administrerS4', administrerS4Post)
 app.post('/emailaction', traitementMailPost)
 app.post('/administrationConsultation', administrationConsult)
 //Getion des erreurs de l'Api

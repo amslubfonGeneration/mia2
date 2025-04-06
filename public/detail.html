@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="message.css">
+    <link rel="stylesheet" href="cookies.css">
+    <script type="module" src="detail.js"></script>
+    <style>
+        
+        .modal {
+                    display: none; 
+                    position: fixed;
+                    z-index: 1;
+                    left: 0;
+                    top: 0;
+                    width: 100%;
+                    height: 100%;
+                    background-color: rgba(0, 0, 0, 0.5);
+                    color: white;
+        }
+        .modal-content {
+            background-color:chartreuse;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 100%;
+            max-width: 300px;
+            height: 70px;
+            text-align: center;
+            border-radius: 8px;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        select {
+            background-color:#ccc;
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-family: 'lobster', cursive;
+            font-size: 21px;
+            line-height: 1.1;
+        }
+    </style>
+</head>
+<body>
+    <div class="registration-container">
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <p class="message"></p>
+            </div>
+        </div>
+        <h2 class="form-title">Informations</h2>
+        <form action="/information" method="post" class="myForm">
+                <div class="form-group">
+                    <label for="LicenceOption">Année d'étude.</label>
+                    <select id="Licence_" name="Licence_">
+                        <option value="Licence1">Licence1</option>
+                        <option value="Licence2">Licence2</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="SemestreOption">Votre semestre.</label>
+                    <select id="Semestre_" name="Semestre_">
+                        <option value="Semestre2">Semestre2</option>
+                        <option value="Semestre3">Semestre3</option>
+                        <option value="Semestre4">Semestre4</option>
+                    </select>
+                </div>
+                <button type="submit" class="submit-btn">Soumettre</button>
+        </form>
+        <a href="/">Retour</a>
+    </div>
+</body>
+</html>

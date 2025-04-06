@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrer</title>
+    <link rel="stylesheet" href="/message.css">
+    <script type="module" src="/message.js"></script>
+</head>
+<body>
+    <div class="registration-container">
+        <% if(locals.message_adm){ %>
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <%= locals.message_adm %>
+            </div>
+        </div>        
+        <% } %>
+        <h2 class="form-title">Administrer <br> <%= locals.licence %>(<%= locals.semestre %>):</h2>
+        <form method="POST">
+            <div class="form-group">
+                <label for="matricule">Matricule</label>
+                <input type="text" id="id" name="id" required>
+            </div>
+            <div class="form-group">
+                <label for="python">Note_Python</label>
+                <input type="number" id="python" name="python" required>
+            </div>
+            <div class="form-group">
+                <label for="latex">Note_Latex</label>
+                <input type="number" id="latex" name="latex" required>
+            </div>
+            <div class="form-group">
+                <label for="scilab">Note_Scialab</label>
+                <input type="number" id="scilab" name="scilab" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Mot de pass</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit" class="submit-btn">Envoyer</button>
+        </form>
+        <a href="/api">Réadministrer</a>
+        <a href="/">Retour</a>
+    </div>
+</body>
+</html>

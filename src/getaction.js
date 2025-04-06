@@ -3,11 +3,45 @@ import { supabase } from "./database.js"
 export const administrerGet = async (req, res)=>{
     if(req.session_adm.get('user_adm') === undefined || req.session_adm.get('user_adm') === null){
         return res.redirect('error.html')
-    }else{
-       return res.view('template/administrer.ejs')
+    }else{   
+        res.redirect('detail.html')
+    }     
+}
+
+export const administrerS2_S3Get = async (req, res)=>{
+    //...
+    if(req.session_adm.get('user_adm') === undefined || req.session_adm.get('user_adm') === null){
+        return res.redirect('error.html')
+    }else{   
+        if(req.session_adm.get('user_adm_info') === undefined || req.session_adm.get('user_adm_info') === null){
+            res.redirect('detail.html')
+        }else{
+            return res.view('template/administrerS2_S3.ejs', {
+                licence: req.session_adm.get('user_adm_info')?.Licence_,
+                semestre: req.session_adm.get('user_adm_info')?.Semestre_
+                //.......
+            })
+        }
     }
 }
 
+export const administrerS4Get = async (req, res)=>{
+    //.......
+    if(req.session_adm.get('user_adm') === undefined || req.session_adm.get('user_adm') === null){
+        return res.redirect('error.html')
+    }else{   
+        if(req.session_adm.get('user_adm_info') === undefined || req.session_adm.get('user_adm_info') === null){
+            res.redirect('detail.html')
+        }else{
+            return res.view('template/administrerS4.ejs', {
+                licence: req.session_adm.get('user_adm_info')?.Licence_,
+                semestre: req.session_adm.get('user_adm_info')?.Semestre_
+                //.......
+            })
+        }
+    }
+}
+ 
 export const AdmiconnectGet = async (req, res)=>{
     if(req.session_adm.get('user_adm') === undefined || req.session_adm.get('user_adm') === null){
         return res.view('template/administration.ejs',{
@@ -24,16 +58,17 @@ export const AdmiconnectGet = async (req, res)=>{
 }
 
 export const administrationConsult = async (req, res)=>{
-    const { data: admis, error: admisError } = await supabase
-            .from('etudiants')
+    const { data: admi, error: admisError } = await supabase
+            .from('note')
             .select('*')
-            .eq('id',req.body.id)
-            .single();
+            
+        const admis = admi.filter(item => item.id_etudiant === req.body.id)
+        
             if(admisError){
                 throw new Error("Une erreur s'est produite Réesayer")
             }
         return res.view('template/admin_cons.ejs',{
-            data: [admis]
+            data: admis
         })
         
 }
@@ -79,46 +114,48 @@ export const etuInscriptionGet = (req, res)=>{
 export const consulterNote = async (req, res)=>{
     if((req.session_etu.get('user_etu') === undefined || req.session_etu.get('user_etu') === null) &&
         (req.session_adm.get('user_adm') === undefined || req.session_adm.get('user_adm') === null)
-    ){
+    ){  
+        console.log(req.session_etu.get('user_etu'))
         res.setCookie('consultation','consultation',{
             path:'/'
         })
         res.redirect('/')
     }
     if(!(req.session_etu.get('user_etu') === undefined || req.session_etu.get('user_etu') === null)){
-        const { data: admis, error: admisError } = await supabase
-            .from('etudiants')
+        /*if(req.session_etu.get('user_etu_info') === undefined || req.session_etu.get('user_etu_info') === null){
+            res.redirect('detail.html')
+        }
+        //.....*/
+        const { data: admi, error: admiError } = await supabase
+            .from('note')
             .select('*')
-            .eq('id',req.session_etu.get('user_etu')?.id)
-            .single();
-            if(admisError){
+            if(admiError){
                 throw new Error("Une erreur s'est produite Réesayer")
             }
-        if(admis.Note === null){
-            return res.view('template/etu_note.ejs',{
-                etudiant_note:'Votre Note n\'est pas encore disponible',
-                etudiant_id: admis.id,
-                etudiant_email: admis.email,
-                message: 'Votre Note n\'est pas encore disponible'
-            })
-        }
+        const admis = admi.filter(item => item.id_etudiant === req.session_etu.get('user_etu')?.id)
+            console.log(admis, req.session_etu.get('user_etu')?.id)
+        
         return res.view('template/etu_note.ejs',{
-            etudiant_note:admis.Note,
-            etudiant_id: admis.id,
-            etudiant_email: admis.email
+            data: admis
         })
+
+        
+    
     }
     if(!(req.session_adm.get('user_adm') === undefined || req.session_adm.get('user_adm') === null)){
+        //.......
         const { data: admis, error: admisError } = await supabase
-            .from('etudiants')
+            .from('note')
             .select('*')
             if(admisError){
                 throw new Error("Une erreur s'est produite Réesayer")
             }
+            console.log(admis)
         return res.view('template/admin_cons.ejs',{
             data: admis
         })
     }
+
 }
 
 export const deconnecterAdm = async (req,res)=>{

@@ -141,17 +141,18 @@ export const administrerS2_S3_Post = async (req,res)=>{
                 .upsert([{
                     id: req.body.id
                 }])
+                console.log(error)
             if (error) throw Error("Une erreur s'est produite Réesayer")
             const Notes = req.body.physique
-            console.log(req.session_adm.get('user_adm_info')?.Semestre_)
-            const { data: admis, error: admisError } = await supabase
-                    .from('note')
-                    .select('Semestres',req.session_adm.get('user_adm_info')?.Semestre_)
-                    .eq('id_etudiant',req.body.id)
-                    .eq('matieres', 'TP_physique')
-                    .single();
-                    console.log(admisError, admis,'    gggggggggggggg')
-            if(admisError === null || admisError.details === 'The result contains 0 rows'){
+                    
+            const { data: admi, error: admisError } = await supabase
+                .from('note')
+                .select('*')
+                
+            const admis = admi.filter(item => item.id_etudiant === req.body.id)
+            const filtre = admis.filter(item => item.Semestres === req.session_adm.get('user_adm_info')?.Semestre_)
+        
+            if(filtre.length === 0){
                 const {data, error} = await supabase
                 .from('note')
                 .insert([{
@@ -167,14 +168,6 @@ export const administrerS2_S3_Post = async (req,res)=>{
                     semestre: req.session_adm.get('user_adm_info')?.Semestre_
                 })
             }else{
-                console.log('rrrrrrrrrrrrrrrr',)
-            /*var newadmis = []
-            if(Array.isArray(admis)){
-                newadmis = admis
-            }else{
-                newadmis = Array(admis)
-            }
-            if(newadmis.find(item => item.Semestres === req.session_adm.get('user_adm_info')?.Semestre_) !== undefined){*/
                 const { error: insertError } = await supabase
                 .from('note')
                 .update({Notes})
@@ -219,46 +212,14 @@ export const administrerS4Post = async (req,res)=>{
                     id: req.body.id
                 }])
             if (error) throw Error("Une erreur s'est produite Réesayer")
-            console.log('ffffffffffff')
-            const { data: admis, error: admisError } = await supabase
-                    .from('note')
-                    .select('Semestres', req.session_adm.get('user_adm_info')?.Semestre_)
-                    .eq('id_etudiant',req.body.id)
-                    .single();
-                    console.log(admisError, admis, '    gggggggggggggg')
-            if(admisError === null || admisError.details === 'The result contains 0 rows'){
-                console.log('fffffffffffffffffffff')
-                const {data, error} = await supabase
-                .from('note')
-                .insert([{
-                    id_etudiant: req.body.id,
-                    Semestres: req.session_adm.get('user_adm_info')?.Semestre_,
-                    matieres: 'TP_python',
-                    Notes: req.body.python
-                },
-            {
-                    id_etudiant: req.body.id,
-                    Semestres: req.session_adm.get('user_adm_info')?.Semestre_,
-                    matieres: 'TP_scilab',
-                    Notes: req.body.scilab
-                },
-            {
-                    id_etudiant: req.body.id,
-                    Semestres: req.session_adm.get('user_adm_info')?.Semestre_,
-                    matieres: 'TP_latex',
-                    Notes: req.body.latex
-                }])
-
-            console.log(error, data)
-            if(error){
-                throw Error("Une erreur s'est produite Réesayer")
-            } 
-            return res.view('template/administrerS4.ejs',{
-                    message_adm:`Ajout de l'étudiant ${req.body.id} \nNote_Python:${req.body.python}/20,\nNote_scilab:${req.body.scilab}/20,\nNote_latex:${req.body.latex}/20`,
-                    licence: req.session_adm.get('user_adm_info')?.Licence_,
-                    semestre: req.session_adm.get('user_adm_info')?.Semestre_
-            }) 
-            }else{
+            
+            const { data: admi, error: admisError } = await supabase
+            .from('note')
+            .select('*')
+            
+        const admis = admi.filter(item => item.id_etudiant === req.body.id)
+        const filtre = admis.filter(item => item.Semestres === req.session_adm.get('user_adm_info')?.Semestre_)
+            if(filtre.length !== 0){
                 console.log('rrrrrrrrrrrr')
                 const  { data:data1 ,error: error1 } = await supabase
                 .from('note')
@@ -289,7 +250,40 @@ export const administrerS4Post = async (req,res)=>{
                     licence: req.session_adm.get('user_adm_info')?.Licence_,
                     semestre: req.session_adm.get('user_adm_info')?.Semestre_
                 })
-            }
+            
+            }else{
+
+                const {data, error} = await supabase
+                .from('note')
+                .insert([{
+                    id_etudiant: req.body.id,
+                    Semestres: req.session_adm.get('user_adm_info')?.Semestre_,
+                    matieres: 'TP_python',
+                    Notes: req.body.python
+                },
+            {
+                    id_etudiant: req.body.id,
+                    Semestres: req.session_adm.get('user_adm_info')?.Semestre_,
+                    matieres: 'TP_scilab',
+                    Notes: req.body.scilab
+                },
+            {
+                    id_etudiant: req.body.id,
+                    Semestres: req.session_adm.get('user_adm_info')?.Semestre_,
+                    matieres: 'TP_latex',
+                    Notes: req.body.latex
+            }])
+
+            console.log(error, data)
+            if(error){
+                throw Error("Une erreur s'est produite Réesayer")
+            } 
+            return res.view('template/administrerS4.ejs',{
+                    message_adm:`Ajout de l'étudiant ${req.body.id} \nNote_Python:${req.body.python}/20,\nNote_scilab:${req.body.scilab}/20,\nNote_latex:${req.body.latex}/20`,
+                    licence: req.session_adm.get('user_adm_info')?.Licence_,
+                    semestre: req.session_adm.get('user_adm_info')?.Semestre_
+            })
+        }
         }else{
             return res.view('template/administrerS4.ejs',{
                 message_adm:"Mots de pass incorrect"

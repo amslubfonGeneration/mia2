@@ -14,6 +14,7 @@ import { session_key1, session_key2 } from "./config.js"
 import { EtuconnectPost, etuInscriptionPost, Information } from "./postaction_2.js"
 const host = ("RENDER" in process.env) ? `0.0.0.0` : `localhost`;
 
+const isMaintenanceMode = true; // Changez à false lorsque le site est opérationnel
 const rootDir = dirname(dirname(fileURLToPath(import.meta.url)))
 const app = fastify({logger:true})
 app.register(fastifyView,{
@@ -46,6 +47,15 @@ app.register(secureSession,[{
     }}
 ])
 
+app.addHook('preHandler', async (req, res) => {
+  if (isMaintenanceMode) {
+    res.status(503).send(`
+    Les notes de TP sont actuellement en cours de saisis.
+    Veuiller revenir plus tard.
+    `);
+  }
+});
+
 app.get('/Réinitialisation', AdmiRéinitialisationGet)
 app.get('/connectAdministration', AdmiconnectGet)
 app.get('/connectEtudiant', EtuconnectGet)
@@ -58,6 +68,8 @@ app.get('/deconnectEtu', deconnecterEtu)
 app.get('/emailaction',async (req, res)=>{
     return res.view('template/email.ejs')
 })
+
+
 
 app.get('/',async (req, res)=>{
     return res.redirect('index.html')
